@@ -1,0 +1,33 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board.Board">
+	<resultMap id="BoardResult" type="Board">
+		<result property="board_num" column="board_num" />
+		<result property="board_sub" column="board_sub" />
+		<result property="board_content" column="board_content" /> 
+		<result property="board_date" column="board_date" />		
+	</resultMap>
+
+	<select id="list" resultMap="BoardResult">
+		select * from board order by board_num desc
+	</select>
+	
+	<insert id="insert" parameterType="Board">
+		insert into board (board_num, board_sub, board_content, board_date)
+		 values ( board_seq.nextval, #{board_sub}, #{board_content}, sysdate)
+	</insert>
+	
+	<select id="select" parameterType="String" resultType="Board">
+		select * from board where board_num = #{board_num}
+	</select>
+	
+	<delete id="delete" parameterType="String">
+		delete from board where board_num = #{board_num}
+	</delete>
+	
+	<update id="update" parameterType="Board">
+		update board set board_sub = #{board_sub},
+		board_content = #{board_content}, board_date =sysdate 
+		where board_num = #{board_num}
+	</update>
+</mapper>

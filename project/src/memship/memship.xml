@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="memship.MemShip">
+	<resultMap id="MemShipResult" type="MemShip">
+		<result property="msNum" column="msNum" />
+		<result property="disc" column="disc" />
+		<result property="grade" column="grade" />		
+	</resultMap>
+
+	<select id="list" resultMap="MemShipResult">
+		select * from memship
+	</select>
+
+	<select id="select" parameterType="int" resultType="MemShip">
+		select * from memship where msNum = #{msNum}
+	</select>
+
+	<insert id="insert" parameterType="MemShip">
+		<selectKey order="BEFORE" resultType="int" keyProperty="MemShip">
+			select memship_seq.nextval from dual
+		</selectKey>
+		insert into memship values (#{msNum}, #{disc}, #{grade})
+	</insert>
+
+	<update id="update" parameterType="MemShip">
+		update memship set	disc = #{disc}, grade = #{grade} where msNum = #{msNum}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		delete from memship where msNum = #{msNum}
+	</delete>
+
+</mapper>
